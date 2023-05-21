@@ -1,0 +1,358 @@
+/* ここから下に記載していく */
+#yellow{
+    color: #ffd61a;
+}
+
+.top-container{
+    width: 1365px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.top-letter-container{
+    display: flex;
+}
+
+.top-letter{
+    font-size: 20px;
+    margin: 50px 25px 50px 25px;
+}
+
+
+.cover-container{
+    position: relative;
+    text-align: center;
+}
+
+.message{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: white;
+} 
+
+.message1{
+    font-weight: bold;
+    font-size: 40px;
+    margin: 0 0 30px 0;
+}
+.message2{
+    font-size: 28px;
+}
+
+.about-container{
+    text-align: center;
+}
+
+.about-container h1{
+    font-weight: bold;
+    font-size: 24px;
+    margin: 60px 0 30px 0;
+    color: #ffd61a;
+}
+
+.about-container h2{
+    font-size: 18px;
+    margin: 30px 0 60px 0;
+}
+
+.about1 {
+    font-size: 16px;
+    margin: 0 0 40px 0;
+}
+.about2 {
+    font-size: 16px;
+    margin: 0 0 40px 0;
+}
+
+.about3 {
+    font-size: 16px;
+    margin: 0 0 40px 0;
+}
+.about4 {
+    font-size: 16px;
+    margin: 0 0 80px 0;
+}
+
+/* スライドショー */
+.slider{
+    width: 400px;
+    height: 300px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.slider-item{
+    width: 400px;
+    float: left;
+}
+
+/* .slider-innner img{
+    width: 100%;
+} */
+
+.slider-innner{
+    width: 400%;
+    animation: slider 20s infinite ease;
+}
+
+@keyframes slider {
+	0% {
+	transform: translateX(0);
+	}
+	25% {
+	transform: translateX(-400px);
+	}
+	50% {
+	transform: translateX(-800px);
+	}
+    75% {
+    transform: translateX(-1200px);
+    }
+	100% {
+	transform: translateX(0);
+	}
+}
+
+
+/* コース */
+.cource-container{
+    text-align: center;
+    margin: 0 0 60px 0;
+}
+
+.cource-container h1{
+    margin: 60px 0 30px 0;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+
+
+/* コースの下 */
+.card-container{
+    width: 1365px;
+    display: flex;
+    align-items: center;
+    background-color: #e7e7e7;
+    margin: 0 auto;
+}
+
+.card-img{
+    width: 50%;
+}
+
+.card-text{
+    width: 50%;
+    margin: 0 0 0 50px;
+}
+
+.card-text h3{
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    margin: 0 0 40px 0;
+}
+
+.card-text p{
+    text-align: left;
+    font-size: 14px;
+}
+/* ニュース */
+
+.news{
+    text-align: center;
+}
+
+.news-head h1{
+    font-size: 24px;
+    padding: 60px 0 30px 0;
+    color: #ffd61a;
+}
+.news-head p{
+    font-size: 18px;
+    padding: 0 0 60px 0;
+}
+
+
+.news-conteiner{
+    display: flex;
+    justify-content: center;
+}
+
+.news-card{
+    width: 300px;
+    padding: 0 15px 60px 15px;
+}
+
+.news-card p{
+    font-size: 14px;
+    margin: 10px 0 10px 0;
+}
+
+.news-card:hover{
+    opacity: 0.5;
+}
+.news-card img{
+    margin: 0 15px 0 0;
+}
+.news-date{
+    padding: 30px 0 24px 0;
+    font-weight: bold;
+}
+
+.news-button{
+    text-align: center;
+
+}
+.news-button button{
+    width: 300px;
+    height: 60px;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    margin: 0 0 60px 0;
+    border: none;
+    background-color: gold;
+}
+
+button:hover{
+    opacity: 0.5;
+}
+
+/* アクセス */
+.access{
+    width: 1365px;
+    padding: 60px 0 60px 0;
+    background-color: #e7e7e7;
+    margin: 0 auto;
+}
+
+.access-head{
+    text-align: center;
+}
+
+.access-map{
+    text-align: center;
+    margin: 0 0 60px 0;
+}
+
+.access-head h1{
+    margin: 0 0 30px 0;
+    font-weight: bold;    
+}
+.access-head p{
+    margin: 0 0 60px 0;    
+}
+
+.access-info{
+    text-align: center;
+}
+
+.access-card{
+    margin: 15px 0 15px 0;
+}
+
+.access-card .inline1{
+    display: inline-block;
+    text-align: left;
+    width: 150px;
+}
+.access-card .inline2{
+    display: inline-block;
+    text-align: left;
+    width: 400px;
+
+}
+
+/* コンタクト */
+.contact{
+    text-align: center;
+}
+
+.contact h1{
+    margin: 60px 0 30px 0;
+    font-weight: bold;
+}
+
+.contact-card1{
+    margin: 30px 0 60px 0;
+}
+.contact-card2{
+    margin: 0px 0 30px 0;
+}
+.contact-card3{
+    margin: 0px 0 70px 0;
+}
+
+/* コンタクトフォーム */
+.contact-form{
+    font-size: 14px;
+}
+
+table, th,td{
+    margin: auto;
+    border: 1px solid;
+    border-color: #bfbfbf;
+    border-width: 2px;
+    text-align: left;
+}
+
+th{
+    width: 240px;
+    vertical-align: top;
+    padding: 16px 64px 16px 16px;
+    }
+
+td{
+    width: 400px;
+    padding: 8px 0 8px 8px;
+    vertical-align: middle;
+}
+
+.contact-form select{
+    width: 328px;
+    height: 20px;
+}
+.contact-form input[type="text"],input[type="email"]{
+    width: 328px;
+    height: 20px;
+}
+
+.checkbox-conteiner label{
+    display: block;
+    padding: 12px;
+}
+
+.submit-button{
+    width: 300px;
+    height: 60px;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    margin: 30px 0 140px 0;
+    border: none;
+    background-color: gold;
+}
+
+textarea{
+    resize: none;
+    width: 328px;
+    height: 100px;
+}
+
+.submit-button:hover{
+    opacity: 0.5;
+}
+
+.footer-container{
+    margin: 0 auto;
+    width: 1365px;
+    background-color: #707070;
+    padding: 30px 0 30px 0;
+    color: white;
+}
+
