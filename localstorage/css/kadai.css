@@ -1,0 +1,33 @@
+tr{
+    text-align: center;
+}
+
+.btn{
+    padding: 0 0 40px 0;
+}
+
+p{
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+	background: #dfdfdf;
+}
+
+tr:nth-child(odd) {
+	background: #ffffff;
+}
+
+
+table{
+    width: 900px;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.title{
+    font-weight: 500;
+    color: white;
+    background-color: rgb(31, 105, 253);
+}
+

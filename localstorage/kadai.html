@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勤怠管理</title>
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <link rel="stylesheet" href="./css/kadai.css">
+</head>
+<body>
+    <h1>勤怠管理表</h1>
+    <p>日付を選択しボタンを押してください。</p>
+    <div>
+        <label for="date">日付：</label>
+        <input type="datetime-local" id="date">    
+    </div>
+    <div class="btn">
+        <button id="start_work">出勤</button>
+        <button id="end_work">退勤</button>
+        <button id="start_rest">休憩開始</button>
+        <button id="end_rest">休憩終了</button>
+        <button id="clear">クリア</button>
+    </div>
+
+    <div class="btn2">
+        <button id="prev">前月</button>
+        <button id="next">先月</button>
+    </div>
+
+    <div id="key"></div>
+    <div id="value"></div>
+
+    <table id="result">
+        <!-- データ表示用 -->
+        <tr>
+            <th class="title">日付</th>
+            <td class="title">勤務開始時間</td>
+            <td class="title">勤務終了時間</td>
+            <td class="title">休憩開始時間</td>
+            <td class="title">休憩終了時間</td>
+            <td class="title">　勤務時間　</td>
+        </tr>
+    </table>
+
+
+<script>
+    // 変数の定義
+    let keyarray=[];
+    let valuearray=[];
+    keyarray=keysort(keyarray);
+    valuerray=valuesort(valuearray);
+    
+    let s_date=new Date();
+    let e_date=new Date();
+    
+
+
+
+    //関数の実行
+    start_work();
+    end_work();
+    start_rest();
+    end_rest();
+    calender();
+    display_localstorage();
+    work_time();
+    clear();
+    // next();
+
+    //以下関数
+    //クリックイベント(出勤用)
+    function start_work(){
+        $("#start_work").on("click",function(){
+        let full_time=$("#date").val(); //inputの日付を取得
+        let year=full_time.substr(0,4);
+        let month=full_time.substr(5,2);
+        let date=full_time.substr(8,2);
+        let hour=full_time.substr(11,2);
+        let minute=full_time.substr(14,2);
+        let key=year+month+date+"start_work"; //keyの値を設定
+        let select="#"+year+month+date+"start_work"; 
+        $(select).html(hour+":"+minute); //クリックしたらwebに反映
+        localStorage.setItem(key,full_time); //クリックしたらLSに保存
+    });
+    }
+   
+    // クリックイベント（退勤用）
+    function end_work(){
+        $("#end_work").on("click",function(){
+        let full_time=$("#date").val(); //inputの日付を取得
+        let year=full_time.substr(0,4);
+        let month=full_time.substr(5,2);
+        let date=full_time.substr(8,2);
+        let hour=full_time.substr(11,2);
+        let minute=full_time.substr(14,2);
+        let key=year+month+date+"end_work"; //keyの値を設定
+        let select="#"+year+month+date+"end_work"; 
+        $(select).html(hour+":"+minute); //クリックしたらwebに反映
+        localStorage.setItem(key,full_time); //クリックしたらLSに保存 
+    });
+    }
+
+    // クリックイベント（休憩開始）
+    function start_rest(){
+        $("#start_rest").on("click",function(){
+        let full_time=$("#date").val(); //inputの日付を取得
+        let year=full_time.substr(0,4);
+        let month=full_time.substr(5,2);
+        let date=full_time.substr(8,2);
+        let hour=full_time.substr(11,2);
+        let minute=full_time.substr(14,2);
+        let key=year+month+date+"start_rest"; //keyの値を設定
+        let select="#"+year+month+date+"start_rest"; 
+        $(select).html(hour+":"+minute); //クリックしたらwebに反映
+        localStorage.setItem(key,full_time); //クリックしたらLSに保存 
+    });
+    }
+
+    // クリックイベント(休憩終了)
+    function end_rest(){
+        $("#end_rest").on("click",function(){
+        let full_time=$("#date").val(); //inputの日付を取得
+        let year=full_time.substr(0,4);
+        let month=full_time.substr(5,2);
+        let date=full_time.substr(8,2);
+        let hour=full_time.substr(11,2);
+        let minute=full_time.substr(14,2);
+        let key=year+month+date+"end_rest"; //keyの値を設定
+        let select="#"+year+month+date+"end_rest"; 
+        $(select).html(hour+":"+minute); //クリックしたらwebに反映
+        localStorage.setItem(key,full_time); //クリックしたらLSに保存 
+    });
+    }
+
+    //クリアイベント
+    function clear(){
+        $("#clear").on("click",function(){
+        localStorage.clear();
+        });
+    }
+
+    //関数：keyの配列化
+    function keysort(x){
+        for (i=0; i<localStorage.length; i++){
+            const a=localStorage.key(i);
+            const b=localStorage.getItem(a);
+            x[i]=a;
+        }
+        return x
+    }
+
+    //関数：valueの配列化
+    function valuesort(x){
+        for (i=0; i<localStorage.length; i++){
+            const a=localStorage.key(i);
+            const b=localStorage.getItem(a);
+            x[i]=b;
+        }
+        return x
+    }
+
+    // 次月表示
+    function next(){
+        $("#next").on("click",function(){
+            s_date.setMonth(s_date.getMonth());
+            e_date.setMonth(e_date.getMonth()+1);
+            console.log(s_date);
+            console.log(e_date);
+        });       
+    }
+    
+
+    //カレンダー表示し、セルにidセット
+
+    function calender(){
+        s_date.setDate(1);
+        console.log(s_date);
+
+        e_date.setMonth(e_date.getMonth()+1);
+        e_date.setDate(0);
+        console.log(e_date);
+
+        // $("#next").on("click",function(){
+        //     s_date.setMonth(s_date.getMonth());
+        //     e_date.setMonth(e_date.getMonth()+1);
+        //     return startDate = s_date;
+        //     return endDate = e_date;
+
+        //     console.log(s_date);
+        // }); 
+
+        let startDate = s_date;
+        let endDate = e_date;
+
+        while (startDate <= endDate) {
+            var year = startDate.getFullYear();
+            var month = ('0' + (startDate.getMonth() + 1)).slice(-2);
+            var day = ('0' + startDate.getDate()).slice(-2);
+            result=year+month+day;
+
+            const html = 
+                `<tr>
+                <th id="${result}">${year+"/"+month+"/"+day}</th>
+                <td id="${result}start_work">${""}</td>
+                <td id="${result}end_work">${""}</td>
+                <td id="${result}start_rest">${""}</td>
+                <td id="${result}end_rest">${""}</td>
+                <td id="${result}work_time">${""}</td>
+                </tr>`;
+            $("#result").append(html); //日付表示と各セルにidをセット
+            startDate.setDate(startDate.getDate() + 1);
+
+            // メモ
+            // idのネーミング：2023XXYYstart_work
+            // idのネーミング：2023XXYYend_work
+        }
+    }
+
+    //ローカルストレージの表示
+    function display_localstorage(){
+        for(i=0; i<keyarray.length; i++){
+            let hour=valuearray[i].substr(11,2);
+            let minute=valuearray[i].substr(14,2);
+            let time = hour+":"+minute;
+            let select="#"+keyarray[i];
+            $(select).html(time);
+        }
+    }
+
+    function work_time(){
+        for(i=0; i<keyarray.length; i++){
+            let id_startwork=keyarray[i].substr(0,8)+"start_work";
+            let id_endwork=keyarray[i].substr(0,8)+"end_work";
+            let id_startrest=keyarray[i].substr(0,8)+"start_rest";
+            let id_endrest=keyarray[i].substr(0,8)+"end_rest";
+            let id_worktime=keyarray[i].substr(0,8)+"work_time";
+
+
+
+            let hour_startwork=$("#"+id_startwork).text;
+            console.log(id_startwork);
+
+
+        }
+    }
+
+
+</script>
+</body>
+
+
+</html>
