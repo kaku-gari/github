@@ -1,0 +1,99 @@
+#output{
+    font-size: 12px;
+    height:400px;
+    width: 300px;
+    background-color: blanchedalmond;
+    background-image: url(imgs/background.jpg);
+    overflow: auto;
+}
+
+.input{
+    width: 300px;
+
+}
+
+.inputname{
+    display: flex;
+    justify-content: space-between;
+}
+#uname{
+    border-radius: 5px;
+    width: 200px;
+    font-size: 12px;
+}
+#text{
+    border-radius: 5px;
+    width: 200px;
+}
+
+.text{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.send{
+    display: flex;
+    justify-content: end;
+
+}
+
+#send{
+    font-size: 10px;
+}
+
+.container{
+    margin: 8px;
+}
+
+.container1{
+    width: 220px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.name{
+    font-weight: bold;
+}
+
+.message{
+    width: 220px;
+    background-color: white;
+    border-radius: 5px;
+    margin: 0;
+    padding: 0;
+}
+
+.message p{
+    margin: 4px 4px;
+}
+
+
+
+.container2{
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.time{
+    /* background-color: blue; */
+    font-size: 10px;    
+}
+
+.deletebtn{
+    margin: auto;
+}
+
+.delete{
+    width: 15px;
+    height: 15px;
+}
+
+
+textarea{
+    font-family: inherit;
+}
+
+

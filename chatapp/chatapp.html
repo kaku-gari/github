@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="line_app.css">
+    <title>Chat app</title>
+</head>
+
+<body>
+    <p>LINE風チャットアプリ</p>
+    <!-- コンテンツ表示画面 -->
+    <div class="input">
+        <div id="output"></div>
+        <div class="inputname">
+            <div>ユーザー名:</div>
+            <input type="text" id="uname" placeholder="ユーザー名を入力">
+        </div>
+        <div class="text">
+            <div>テキスト:</div>
+            <textarea name="" id="text"  rows="1" placeholder="Aa"></textarea>
+        </div>
+        <div class="send">
+            <button id="send">送信</button>
+        </div>
+        </div>
+
+    <!--/ コンテンツ表示画面 -->
+
+
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- JQuery -->
+
+
+    <!--** 以下Firebase **-->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }
+            from "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "",
+            authDomain: "fir-demo-c6fa4.firebaseapp.com",
+            projectId: "fir-demo-c6fa4",
+            storageBucket: "fir-demo-c6fa4.appspot.com",
+            messagingSenderId: "853703694693",
+            appId: "1:853703694693:web:c8967855d5f7405d8c698c"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+
+        // Realtime DBに接続する
+        const db=getDatabase(app);
+        const dbRef= ref(db, "chat");  //dbの中のチャットに保存していきたい
+
+        //DB送信関数
+        function dbset(){
+            // 保存したいデータのオブジェクトを作る
+            const now=new Date();
+            const date=now.toDateString();
+            const hour=now.getHours().toString();
+            const hour2=("0"+hour).slice(-2);
+            const min =now.getMinutes().toString();
+            const min2=("0"+min).slice(-2);
+
+            const date2=hour2+":"+min2+"/"+date;
+            console.log(date2);
+
+            const msg={
+                uname: $("#uname").val(),
+                text: $("#text").val(),
+                time: date2
+            };
+
+            //新規のデータを送れる状態にセット
+            const newPostRef= push(dbRef);
+            //dbRef(=db/chat)に値を送信
+            set(newPostRef,msg);
+            //チャットボックスの一番下まで移動
+            $("#output").scrollTop($("#output")[0].scrollHeight);
+            console.log(msg);
+        }
+
+        // 送信ボタンが押されたらデータをDBに送信
+        $("#send").on("click",function(){
+            dbset();
+        });
+        
+        // テキストボックスでenterが押されたらデータをDBに送信
+        $("#text").on("keydown",function(enter){
+            if (enter.keyCode==13){
+                dbset();
+            }            
+        });
+
+        
+        // データが追加されたときに、ユーザーネームとメッセージを更新
+        onChildAdded(dbRef, function(data){
+            const msg = data.val();
+            const key = data.key;
+            const h=
+            `<div id="${key}" class="container">
+                <div class="container1">
+                    <div class="name">${msg.uname}</div>
+                    <div class="time">${msg.time}</div>
+                </div>
+                <div class="container2">
+                    <div class="message"><p>${msg.text}</p></div>
+                    <a href="#" id="${key}btn" class="deletebtn">
+                        <img class="delete" src="imgs/delete.png" alt="">
+                    </a>
+                </div>
+            </div>`            
+            $("#output").append(h);
+        });
+
+        //         // データが追加されたときに、ユーザーネームとメッセージを更新
+        //     onChildAdded(dbRef, function(data){
+        //     const msg = data.val();
+        //     const key = data.key;
+        //     const h=
+        //     `<div id="${key}" class="container">
+        //         <p class="message">${msg.uname}: ${msg.text}
+        //         </p>
+        //         <a href="#" id="${key}btn" class="deletebtn">
+        //             <img class="delete" src="imgs/delete.png" alt="">
+        //         </a>
+        //     </div>`            
+        //     $("#output").append(h);
+        // });
+
+        // データが削除されたときに、指定のidを削除
+        onChildRemoved(dbRef, function(data){
+            const key = data.key;            
+            $("#"+key).remove();
+            $("#"+key+"btn").remove();
+
+        });
+
+        //削除ボタンをクリックするとメッセージを削除
+        $('#output').on('click','.deletebtn', function(){
+            //クリックしたメッセージのidを取得
+            let click=$(this).attr("id");
+            let id=click.slice(0,-3);
+            //dbの中の場所をchat/idに設定
+            const chatRef=ref(db,"chat/"+id);
+            //対象のデータを削除する
+            remove(chatRef);
+        });
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
