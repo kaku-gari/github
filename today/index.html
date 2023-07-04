@@ -105,9 +105,9 @@ let lon=139.6917;
 // navigator.geolocation.getCurrentPosition(mapsInit);
 
 //天気APIから情報取得①現在の天気
-let url1=`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=308b7721d6be41d78527e3a894de539c`
+let url1=`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=★1`
 
-let url2=`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=308b7721d6be41d78527e3a894de539c`
+let url2=`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=★1`
 axios.get(url1).then(function (res) {
     const a=res.data
     $("#weather1").append(`<p id="place">${a.name}</p>`);
@@ -138,7 +138,7 @@ axios.get(url2).then(function (res) {
 })
 
 //news取得
-let url_news="https://newsapi.org/v2/top-headlines?country=jp&apiKey=d42345e820d2437dbd8ab75b8e3cff31";
+let url_news="https://newsapi.org/v2/top-headlines?country=jp&apiKey=★2";
 axios.get(url_news).then(function(res){
     let a=res.data;
     for(let i=0;i<5;i++){
