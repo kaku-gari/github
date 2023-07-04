@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet">
+
+    <script src="./js/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+</head>
+<body>
+    <div class="up">
+        <h1 class="today">Today</h1>
+        <p class="tokei" id="time"></p>  
+    </div>
+
+    <div class="stock">
+        <!-- <h2>Stock price</h2> -->
+        <p id="stockprice"></p>
+    </div>
+    <div class="weather">
+        <div class="container"><p id="weather1"></p></div>
+        <div class="container2"><p id="weather2"></p></div> 
+    </div>
+    <div class="kakugenbox">
+        <h2>名言</h2>
+        <p id="kakugen"></p>    
+    </div>
+    <div class="newsbox">
+        <h2>News</h2>
+        <button id="speech">再生</button>
+        <p id="news"></p>
+    </div>
+    
+<script>
+// スピーチ
+const synth = window.speechSynthesis; 
+const utterance = new SpeechSynthesisUtterance(); 
+let alltext;
+utterance.lang = 'ja-JP'; // 日本語に設定
+$('#speech').on('click', function () {
+    for(let i=0; i<10;i++){
+        let id="#news"+i;
+        const text = $(id).text();
+        alltext+=text;
+    }
+    utterance.text = alltext; // テキスト内容をセット
+    synth.speak( utterance ); // 喋ってもらう
+});
+
+//時計表示
+function set2fig(num) {
+   // 桁数が1桁だったら先頭に0を加えて2桁に調整する
+   var ret;
+   if( num < 10 ) { ret = "0" + num; }
+   else { ret = num; }
+   return ret;
+}
+function showClock2() {
+   var nowTime = new Date();
+   var nowHour = set2fig( nowTime.getHours() );
+   var nowMin  = set2fig( nowTime.getMinutes() );
+   var nowSec  = set2fig( nowTime.getSeconds() );
+   var msg = " " + nowHour + ":" + nowMin + ":" + nowSec;
+   $("#time").html(msg);
+}
+setInterval('showClock2()',1000);
+
+//名言取得
+url_GAS="https://script.google.com/macros/s/AKfycbwQVwGGUZ3xzxlVW4-c0vgcE27w4lA49cdQIIP7gF8DqmXqQ1fOUNCn7SbX1cc6GcvW/exec";
+axios.get(url_GAS).then(function(res){
+    a=res.data
+    l=a.length;
+    random_id=Math.floor(Math.random()*l);
+    $("#kakugen").html(`<p>${a[random_id].message}</p> <p>${a[random_id].person }</p>`);
+})
+
+//株価取得
+url_sp="https://script.google.com/macros/s/AKfycby4BEuL4VkaP5JimUJ7o4HW_rw8bTT8M3JMVfvrXHr7cXUDDzvIKtNlFed9JILig7PZ/exec";
+axios.get(url_sp).then(function(res){
+    for(let i=0;i<res.data.length;i++){
+        $("#stockprice").append(`
+        <div class="stockbox" id="stock${[i]}">
+        <p class="comp">${res.data[i].name}</p>
+        <p class="price">${res.data[i].Today}</p>
+        <p class="diff">${res.data[i].diff}/${res.data[i].diff2}%</p>
+        </div>
+        `);
+    }
+})
+
+
+//緯度経度の取得
+let lat=35.6894;
+let lon=139.6917;
+// function mapsInit(position) {
+//     lat = position.coords.latitude;
+//     lon = position.coords.longitude;
+//     console.log(lat,lon);
+// };
+// navigator.geolocation.getCurrentPosition(mapsInit);
+
+//天気APIから情報取得①現在の天気
+let url1=`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=308b7721d6be41d78527e3a894de539c`
+
+let url2=`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=308b7721d6be41d78527e3a894de539c`
+axios.get(url1).then(function (res) {
+    const a=res.data
+    $("#weather1").append(`<p id="place">${a.name}</p>`);
+    $("#weather1").append(`<img src="https://openweathermap.org/img/wn/${a.weather[0].icon}@2x.png" alt="">`);
+    $("#weather1").append(`<p>現在気温：${Math.round(a.main.temp)}℃</p>`);
+    $("#weather1").append(`<p>最低気温：${Math.round(a.main.temp_min)}℃</p>`);
+    $("#weather1").append(`<p>最高気温：${Math.round(a.main.temp_max)}℃</p>`);
+    $("#weather1").append(`<p>　湿度　：${Math.round(a.main.humidity)}%</p>`);
+})
+
+
+
+//天気APIから情報取得②今後の天気
+axios.get(url2).then(function (res) {
+    const a=res.data
+    for(let i=0; i<11;i++){
+        let d=a.list[i].dt_txt
+        let month=d.substr(5,2)
+        let day=d.substr(8,2)
+        let time=d.substr(11,2)
+        $("#weather2").append(`
+        <div class="box">
+            <p class="time">${month}/${day} ${time}時 ${Math.round(a.list[i].main.temp)}℃<img src="https://openweathermap.org/img/wn/${a.list[i].weather[0].icon}@2x.png" alt="">  </p>
+            <p class="temp"></p>                  
+        </div>  
+        `)
+    }
+})
+
+//news取得
+let url_news="https://newsapi.org/v2/top-headlines?country=jp&apiKey=d42345e820d2437dbd8ab75b8e3cff31";
+axios.get(url_news).then(function(res){
+    let a=res.data;
+    for(let i=0;i<5;i++){
+        $("#news").append(`
+        <a href="${a.articles[i].url}">${a.articles[i].title}</a>
+        <p id="news${i}">${a.articles[i].description}</p>
+        `)
+    }
+})
+
+
+</script>
+</body>
+
+
+
+</html>

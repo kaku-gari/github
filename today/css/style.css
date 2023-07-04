@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+
+
+.up{
+    display: flex;
+    align-items: center;
+    font-family: "Nico Moji";
+    width: 710px;
+    background-color: antiquewhite;
+    margin: 5px;
+}
+
+.today{
+    width: 300px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.tokei{
+    width: 410px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.kakugenbox{
+    margin: 5px;
+    width: 710px;
+    background-color: rgb(232, 245, 202);
+}
+
+.kakugenbox h2{
+    margin: 0;
+    padding: 0;
+}
+
+.kakugenbox p{
+    margin: 0;
+    padding: 5px;
+}
+
+#kakugen{
+    font-size: 30px;
+    font-family:'Times New Roman', Times, serif;
+    width: 710px;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+
+}
+.stockbox{
+    width: 230px;
+    background-color: rgb(226, 226, 226);
+}
+
+#stockprice{
+    width: 710px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin: 5px 5px 5px 5px;
+}
+
+
+.price{
+    font-size: 26px;
+}
+
+.newsbox{
+    margin: 0 5px 5px 5px;
+    width: 710px;
+    background-color: rgb(249, 239, 195);
+}
+
+
+.weather{
+    display: flex;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 5px;
+    width: 400px;
+    font-size: 22px;
+    background-color: rgb(154, 209, 255);
+}
+
+#weather1 img{
+    width: 100px;
+}
+
+.container2{
+    margin: 5px 0 5px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgb(204, 232, 255);
+    width: 300px;
+}
+
+#kakugen{
+    width: 700px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#place{
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.box img{
+    width: 30px;
+}
+
+.time{
+    display: flex;
+    align-items: center;
+    margin:  0px;
+}
